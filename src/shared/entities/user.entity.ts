@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Post } from "./post.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Like } from "./like.entity";
 
 
 export enum Job {
@@ -34,7 +36,13 @@ export class User {
     job: Job;
 
     @Column({ type: "enum", enum: Grade, default: Grade.none, nullable: false })
-    grade: Grade; 
+    grade: Grade;
+    
+    @OneToMany(() => Post, (post) => post.user)
+    post: Post[];
+
+    @OneToMany(() => Like, (like) => like.user)
+    like: Like[];
 
     @CreateDateColumn()
     createdAt: Date;
