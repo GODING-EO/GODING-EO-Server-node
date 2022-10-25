@@ -1,25 +1,43 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { TopicDto } from "src/topic/topic.dto";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { Topic } from "../entities/topic.entity";
 
 @Injectable()
 export class TopicRepository {
     constructor(
         @InjectRepository(Topic)
-        private readonly topicRepository: Repository<Topic>) {}
+        private readonly topicRepository: Repository<Topic>
+    ) {}
     
-    public async saveTopic(topicDto: TopicDto) {
+    async saveTopic(topicWord: string) {
         const topic = new Topic();
 
-        topic.name = topicDto.name;
+        topic.topic_name = topicWord;
         const newTopic = await this.topicRepository.save(topic);
 
         return newTopic;
     }
     
-    public async findOneTopic(topicDto: TopicDto) {
-        return await this.topicRepository.findOne({ where: { name: topicDto.name } });
+    async findOneTopic(topicWord: string) {
+        // return await this.topicRepository.findOne({ where: { name: topicWord } });
+
+        return await this.topicRepository.createQueryBuilder('topic')
+            .select('topic.topic_name')
+            .where('topic.topic_name = :topicWord', { topicWord })
+            .getOne();
+    }
+
+    async searchTopic(searchWord: string) {
+        return this.topicRepository.find({
+            where: { topic_name: Like(`%${searchWord}%`) },
+        });
+        
+        // return this.topicRepository.createQueryBuilder('topic')
+        //     .select('topic.topic_name')
+        //     .where('topic.topic_name like %:topic_name%', {
+        //         topic_name : searchWord
+        //     })
+        //     .getMany();
     }
 }

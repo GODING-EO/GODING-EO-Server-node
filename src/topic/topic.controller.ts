@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { TopicDto } from './topic.dto';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { TopicService } from './topic.service';
 
 @Controller('topic')
@@ -7,12 +6,12 @@ export class TopicController {
     constructor(private readonly topicService: TopicService) {}
 
     @Post('/add')
-    public async addTopic(@Body() topicDto: TopicDto) {
-        return await this.topicService.addTopic(topicDto);
+    public async addTopic(@Body('topic') topicWord: string) {
+        return await this.topicService.addTopic(topicWord);
     }
 
-    // @Get('/:name')
-    // public async findTopic(@Param('name') reqTopic : string) {
-    //     return await this.topicService.findTopic(reqTopic);
-    // }
+    @Get('search')
+    public async findTopic(@Query('topic') topicWord : string) {
+        return await this.topicService.searchTopic(topicWord);
+    }
 }
