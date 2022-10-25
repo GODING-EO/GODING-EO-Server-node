@@ -35,14 +35,14 @@ export class HttpError extends Error {
   }
   
   export class NotFoundError extends HttpError {
-    constructor(url: string) {
-      super(404, `Not Found ${url}`);
+    constructor() {
+      super(404, `Not Found`);
     }
   }
   
   export class BadRequestError extends HttpError {
-    constructor() {
-      super(400, "Bad request");
+    constructor(message: string) {
+      super(400, message);
     }
   }
   
