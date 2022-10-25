@@ -7,8 +7,9 @@ export class Topic {
     id: number;
 
     @Column({ unique: true, nullable: false })
-    name: string;
+    topic_name: string;
 
     @OneToMany(() => Post, (post) => post.topic)
     post: Post[];
+
 }
