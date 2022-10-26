@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BadRequestError, NotFoundError } from 'src/shared/exception';
+import { BadRequestError, ConflictError, NotFoundError } from 'src/shared/exception';
 import { TopicRepository } from 'src/shared/repositories/topic.repository';
 
 
@@ -13,9 +13,8 @@ export class TopicService {
             const topic = await this.topicRepository.findOneTopic(topicWord);
 
             if(!topic) {
-                 await this.topicRepository.saveTopic(topicWord);
-                return await this.topicRepository.findOneTopic(topicWord);
-            } else throw new BadRequestError(`해당 topic은 이미 있음`);
+                return await this.topicRepository.saveTopic(topicWord);
+            } else throw new ConflictError(`The topic already exists`);
         }
 
         public async findTopic(topicWord: string) {
