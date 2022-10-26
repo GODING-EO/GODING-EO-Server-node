@@ -41,4 +41,20 @@ export class PostRepository {
             .where('post.id = :post_id', { post_id })
             .getOne();
     }
+
+    async deletePost(post_id: number) {
+        return this.postRepository.createQueryBuilder('post')
+            .delete()
+            .from(Post)
+            .where('id = :post_id', { post_id })
+            .execute()
+    }
+
+    async checkUserbyWriter(post_id: number, user: User): Promise<boolean>{
+        const writer = (await this.getPost(post_id)).user_id;
+        if(writer == user.id) {
+            return true;
+        }
+        return false;
+    }
 }
