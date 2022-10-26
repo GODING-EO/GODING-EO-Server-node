@@ -17,8 +17,8 @@ export class HttpError extends Error {
   }
   
   export class ConflictError extends HttpError {
-    constructor() {
-      super(409, 'Conflict');
+    constructor(message: string) {
+      super(409, message);
     }
   }
   
