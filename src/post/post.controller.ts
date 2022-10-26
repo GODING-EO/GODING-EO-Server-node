@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { User } from 'src/shared/entities/user.entity';
@@ -24,5 +24,18 @@ export class PostController {
     @Get('/:post_id')
     public async ReadPost(@Param('post_id') post_id: number) {
         return await this.postService.getPost(post_id);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete('/:post_id')
+    public async DeletePost(
+        @Param('post_id') post_id: number,
+        @Req() req:Request
+    ) {
+        await this.postService.deletePost(
+            post_id,
+            req.user as User,
+        );
+        return { status: 200, message: 'delete success'};
     }
 }
