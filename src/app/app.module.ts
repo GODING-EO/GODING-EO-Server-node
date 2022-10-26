@@ -7,9 +7,17 @@ import { PostModule } from 'src/post/post.module';
 import { SchoolModule } from '../school/school.module';
 import { config } from '../config/ormconfig';
 import { TopicModule } from 'src/topic/topic.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), TopicModule, UserModule, PostModule, SchoolModule],
+  imports: [
+    TypeOrmModule.forRoot(config), 
+    TopicModule, 
+    UserModule, 
+    PostModule, 
+    SchoolModule,
+    AuthModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
