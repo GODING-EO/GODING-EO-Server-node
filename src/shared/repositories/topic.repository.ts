@@ -11,21 +11,20 @@ export class TopicRepository {
     ) {}
     
     async saveTopic(topicWord: string) {
-        // typeOrm Active Record 버전
-        // const topic = new Topic();
+        const topic = new Topic();
 
-        // topic.topic_name = topicWord;
-        // const newTopic = await this.topicRepository.save(topic);
+        topic.topic_name = topicWord;
+        const newTopic = await this.topicRepository.save(topic);
 
-        // return newTopic;
+        return newTopic;
 
-        return await this.topicRepository.createQueryBuilder()
-            .insert()
-            .into(Topic)
-            .values([
-                { topic_name: topicWord }
-            ])
-            .execute(); 
+        // return await this.topicRepository.createQueryBuilder()
+        //     .insert()
+        //     .into(Topic)
+        //     .values([
+        //         { topic_name: topicWord }
+        //     ])
+        //     .execute(); 
     }
     
     async findOneTopic(topicWord: string) {
