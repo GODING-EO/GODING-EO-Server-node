@@ -26,11 +26,9 @@ export class PostService {
     }
 
     public async deletePost(post_id: number, user: User) {
-        const post = await this.postRepository.getPost(post_id);
-
-        if(!post) {
+        if(!await this.postRepository.getPost(post_id)) {
             throw new NotFoundError;
-        } else if(this.postRepository.checkUserbyWriter(post_id, user)){
+        } else if(await this.postRepository.checkUserbyWriter(post_id, user) == true){
             return await this.postRepository.deletePost(post_id);
         } throw new ForbiddenError;
     }
