@@ -2,7 +2,7 @@
   "name": "nest-app",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "yebin <yebin5127@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -41,7 +41,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.10"
+    "typeorm": "^0.3.10",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -83,5 +84,7 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "main.ts",
+  "repository": "https://github.com/GODING-EO/GODING-EO-Server-node.git"
 }
