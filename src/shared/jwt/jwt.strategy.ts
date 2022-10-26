@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Repository } from "typeorm";
 import { User } from "../entities/user.entity";
-import { BadRequestError } from "../exception";
+import { BadRequestError, UnAuthorizedError } from "../exception";
 import { Payload } from "./jwt.payload";
 
 @Injectable()
@@ -27,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         if(user) {
             return user;
         } else {
-            throw BadRequestError;
+            throw UnAuthorizedError;
         }
     }
 }
