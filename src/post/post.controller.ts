@@ -36,6 +36,6 @@ export class PostController {
             post_id,
             req.user as User,
         );
-        return { status: 200, message: 'delete success'};
+        return { statusCode: 200, message: 'delete success'};
     }
 }
