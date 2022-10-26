@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/shared/entities/user.entity';
-import { NotFoundError } from 'src/shared/exception';
+import { ForbiddenError, NotFoundError, UnAuthorizedError } from 'src/shared/exception';
 import { PostRepository } from 'src/shared/repositories/post.repository';
 import { Repository } from 'typeorm';
 import { Post } from '../shared/entities/post.entity';
@@ -23,5 +23,15 @@ export class PostService {
         if(!post) {
             throw new NotFoundError;
         } else return post;
+    }
+
+    public async deletePost(post_id: number, user: User) {
+        const post = await this.postRepository.getPost(post_id);
+
+        if(!post) {
+            throw new NotFoundError;
+        } else if(this.postRepository.checkUserbyWriter(post_id, user)){
+            return await this.postRepository.deletePost(post_id);
+        } throw new ForbiddenError;
     }
 }
