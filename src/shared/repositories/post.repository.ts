@@ -52,9 +52,7 @@ export class PostRepository {
 
     async checkUserbyWriter(post_id: number, user: User): Promise<boolean>{
         const writer = (await this.getPost(post_id)).user_id;
-        if(writer == user.id) {
-            return true;
-        }
+        if(writer == user.id) { return true; }
         return false;
     }
 }
