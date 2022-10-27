@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BadRequestError, ConflictError, NoContent, } from 'src/shared/exception';
+import { ConflictError } from 'src/shared/exception';
 import { TopicRepository } from 'src/shared/repositories/topic.repository';
 
 
