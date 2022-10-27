@@ -28,10 +28,9 @@ export class PostRepository {
         return newPost;
     };
 
-    async getPost(post_id: number) {
+    async getOnePost(post_id: number) {
         return await this.postRepository.createQueryBuilder('post')
-            .select('post.id')
-            .addSelect('post.title')
+            .select('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
             .addSelect('post.user_id')
@@ -40,6 +39,18 @@ export class PostRepository {
             .addSelect('post.createdAt')
             .where('post.id = :post_id', { post_id })
             .getOne();
+    }
+
+    async getAllPost() {
+        return this.postRepository.createQueryBuilder('post')
+            .select('post.title')
+            .addSelect('post.title')
+            .addSelect('post.content')
+            .addSelect('post.image')
+            .addSelect('post.user_id')
+            .addSelect('post.school_id')
+            .addSelect('post.createdAt')
+            .getMany();
     }
 
     async deletePost(post_id: number) {
@@ -51,7 +62,7 @@ export class PostRepository {
     }
 
     async checkUserbyWriter(post_id: number, user: User): Promise<boolean>{
-        const writer = (await this.getPost(post_id)).user_id;
+        const writer = (await this.getOnePost(post_id)).user_id;
         if(writer == user.id) return true; 
         return false;
     }
