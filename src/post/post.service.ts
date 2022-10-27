@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/shared/entities/user.entity';
-import { ForbiddenError, NotFoundError, UnAuthorizedError } from 'src/shared/exception';
+import { ForbiddenError, NotFoundError } from 'src/shared/exception';
 import { PostRepository } from 'src/shared/repositories/post.repository';
 import { PostDto } from './dto/post.dto';
 
@@ -11,7 +11,7 @@ export class PostService {
     ) {}
 
     public async createPost(postDto: PostDto, user: User) {
-        return await this.postRepository.savePost(postDto, user);
+        return await this.postRepository.createPost(postDto, user);
     }
 
     public async getOnePost(post_id: number) {

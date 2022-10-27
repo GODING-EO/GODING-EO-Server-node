@@ -12,7 +12,7 @@ export class PostRepository {
         private readonly postRepository: Repository<Post>
     ) {}
 
-    async savePost(postDto: PostDto, user: User) {
+    async createPost(postDto: PostDto, user: User) {
         const post = new Post();
 
         console.log(postDto, user);
