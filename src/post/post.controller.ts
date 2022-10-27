@@ -23,7 +23,12 @@ export class PostController {
 
     @Get('/:post_id')
     public async ReadPost(@Param('post_id') post_id: number) {
-        return await this.postService.getPost(post_id);
+        return await this.postService.getOnePost(post_id);
+    }
+
+    @Get()
+    public async ReadAllPost() {
+        return await this.postService.getAllPost();
     }
 
     @UseGuards(AuthGuard('jwt'))
