@@ -10,7 +10,7 @@ export class TopicRepository {
         private readonly topicRepository: Repository<Topic>
     ) {}
     
-    async saveTopic(topicWord: string) {
+    async addTopic(topicWord: string) {
         const topic = new Topic();
 
         topic.topic_name = topicWord;
@@ -27,8 +27,7 @@ export class TopicRepository {
         //     .execute(); 
     }
     
-    async findOneTopic(topicWord: string) {
-        // typeOrm Active Record 버전
+    async getOneTopic(topicWord: string) {
         // return await this.topicRepository.findOne({ where: { name: topicWord } });
 
         return await this.topicRepository.createQueryBuilder('topic')
@@ -39,15 +38,15 @@ export class TopicRepository {
     }
 
     async searchTopic(searchWord: string) {
-        return this.topicRepository.find({
-            where: { topic_name: Like(`%${searchWord}%`) },
-        });
+        // return this.topicRepository.find({
+        //     where: { topic_name: Like(`%${searchWord}%`) },
+        // });
         
-        // return this.topicRepository.createQueryBuilder('topic')
-        //     .select('topic.topic_name')
-        //     .where('topic.topic_name like %:topic_name%', {
-        //         topic_name : searchWord
-        //     })
-        //     .getMany();
+        return this.topicRepository.createQueryBuilder('topic')
+            .select('topic.topic_name')
+            .where('topic.topic_name like :topic_name', {
+                topic_name : `%${searchWord}%`
+            })
+            .getMany();
     }
 }
