@@ -1,6 +1,15 @@
-import { School } from "./school.entity";
+import {
+    Entity, 
+    Column, 
+    CreateDateColumn,
+    JoinColumn,
+    ManyToOne, 
+    OneToMany, 
+    PrimaryGeneratedColumn, 
+    UpdateDateColumn 
+} from "typeorm";
 import { User } from "./user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { School } from "./school.entity";
 import { Topic } from "./topic.entity";
 import { Like } from "./like.entity";
 
@@ -47,4 +56,7 @@ export class Post {
 
     @OneToMany(() => Like, (like) => like.post)
     like: Like[];
+
+    @OneToMany(() => Like, (like) => like.post)
+    comment: Comment[];
 }
