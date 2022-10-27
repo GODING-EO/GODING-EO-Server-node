@@ -1,6 +1,15 @@
+import { 
+    Entity, 
+    Column, 
+    CreateDateColumn,
+    OneToMany, 
+    PrimaryGeneratedColumn, 
+    UpdateDateColumn 
+} from "typeorm";
 import { Post } from "./post.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Comment } from "./comment.entity";
 import { Like } from "./like.entity";
+
 
 
 export enum Job {
@@ -40,6 +49,9 @@ export class User {
     
     @OneToMany(() => Post, (post) => post.user)
     post: Post[];
+
+    @OneToMany(() => Comment, (comment) => comment.user)
+    comment: Comment[];
 
     @OneToMany(() => Like, (like) => like.user)
     like: Like[];
