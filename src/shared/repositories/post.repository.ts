@@ -52,7 +52,20 @@ export class PostRepository {
 
     async checkUserbyWriter(post_id: number, user: User): Promise<boolean>{
         const writer = (await this.getPost(post_id)).user_id;
-        if(writer == user.id) { return true; }
+        if(writer == user.id) return true; 
         return false;
+    }
+
+    async updatePost(post_id: number, postDto: PostDto) {
+        return this.postRepository.createQueryBuilder('post')
+            .update(Post)
+            .set({  title: postDto.title,
+                    content: postDto.content,
+                    image: postDto.image,
+                    school_id: postDto.school_id,
+                    topic_id: postDto.topic_id
+                })
+            .where('id = :post_id', { post_id })
+            .execute();
     }
 }
