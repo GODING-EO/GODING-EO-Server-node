@@ -22,12 +22,12 @@ export class PostController {
     }
 
     @Get('/:post_id')
-    public async ReadPost(@Param('post_id') post_id: number) {
+    public async getOnePost(@Param('post_id') post_id: number) {
         return await this.postService.getOnePost(post_id);
     }
 
     @Get()
-    public async ReadAllPost() {
+    public async getAllPost() {
         return await this.postService.getAllPost();
     }
 
@@ -56,5 +56,6 @@ export class PostController {
             req.user as User,
             postReqData
         );
+        return { statusCode: 200, message: 'update success'};
     }
 }
