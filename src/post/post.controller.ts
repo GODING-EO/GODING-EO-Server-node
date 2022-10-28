@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { User } from 'src/shared/entities/user.entity';
@@ -19,6 +19,12 @@ export class PostController {
             postReqData,
             req.user as User,
         );
+    }
+
+    @Get('search')
+    public async searchPost(@Query('where') searchWord: string) {
+        console.timeLog(searchWord);
+        return await this.postService.searchPost(searchWord);
     }
 
     @Get('/:post_id')
