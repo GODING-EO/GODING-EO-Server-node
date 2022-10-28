@@ -13,7 +13,7 @@ export class TopicController {
     }
 
     @Get('search')
-    public async searchTopic(@Query('topic') topicWord : string) {
+    public async searchTopic(@Query('where') topicWord : string) {
         return await this.topicService.searchTopic(topicWord);
     }
 }
