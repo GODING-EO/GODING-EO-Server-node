@@ -79,4 +79,20 @@ export class PostRepository {
             .where('id = :post_id', { post_id })
             .execute();
     }
+
+    async searchPost(searchWord: string) {
+        return this.postRepository.createQueryBuilder('post')
+            .select('post.title')
+            .addSelect('post.title')
+            .addSelect('post.content')
+            .addSelect('post.image')
+            .addSelect('post.user_id')
+            .addSelect('post.school_id')
+            .addSelect('post.createdAt')
+            .where('post.title like :title OR post.content like :content', {
+                title: `%${searchWord}%`,
+                content: `%${searchWord}%`
+            })
+            .getMany();
+    }
 }
