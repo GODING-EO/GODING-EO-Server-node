@@ -39,4 +39,8 @@ export class PostService {
             return await this.postRepository.updatePost(post_id, postDto);
         } throw new ForbiddenError;
     }
+
+    public async searchPost(searchWord: string) {
+        return await this.postRepository.searchPost(searchWord);
+    }
 }
