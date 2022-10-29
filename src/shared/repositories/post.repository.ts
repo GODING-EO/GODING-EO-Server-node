@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { PostDto } from "src/post/dto/post.dto";
 import { Repository } from "typeorm";
 import { Post } from "../entities/post.entity";
+import { Topic } from "../entities/topic.entity";
 import { User } from "../entities/user.entity";
 
 @Injectable()
@@ -83,12 +84,15 @@ export class PostRepository {
     async searchPost(searchWord: string) {
         return this.postRepository.createQueryBuilder('post')
             .select('post.title')
-            .addSelect('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
-            .addSelect('post.user_id')
-            .addSelect('post.school_id')
+            .addSelect('user.account_id')
+            .addSelect('school.name')
+            .addSelect('topic.name')
             .addSelect('post.createdAt')
+            .innerJoin('post.user', 'user')
+            .innerJoin('post.topic', 'topic')
+            .innerJoin('post.school', 'school')
             .where('post.title like :title OR post.content like :content', {
                 title: `%${searchWord}%`,
                 content: `%${searchWord}%`
