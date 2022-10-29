@@ -34,10 +34,13 @@ export class PostRepository {
             .select('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
-            .addSelect('post.user_id')
-            .addSelect('post.school_id')
-            .addSelect('post.topic_id')
+            .addSelect('user.account_id')
+            .addSelect('school.name')
+            .addSelect('topic.name')
             .addSelect('post.createdAt')
+            .innerJoin('post.user', 'user')
+            .innerJoin('post.topic', 'topic')
+            .innerJoin('post.school', 'school')
             .where('post.id = :post_id', { post_id })
             .getOne();
     }
@@ -45,12 +48,15 @@ export class PostRepository {
     async getAllPost() {
         return this.postRepository.createQueryBuilder('post')
             .select('post.title')
-            .addSelect('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
-            .addSelect('post.user_id')
-            .addSelect('post.school_id')
+            .addSelect('user.account_id')
+            .addSelect('school.name')
+            .addSelect('topic.name')
             .addSelect('post.createdAt')
+            .innerJoin('post.user', 'user')
+            .innerJoin('post.topic', 'topic')
+            .innerJoin('post.school', 'school')
             .getMany();
     }
 
