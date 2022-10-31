@@ -4,20 +4,23 @@ import {
     CreateDateColumn,
     OneToMany, 
     PrimaryGeneratedColumn, 
-    UpdateDateColumn 
+    UpdateDateColumn, 
+    ManyToOne,
+    JoinColumn
 } from "typeorm";
 import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
-import { Like } from "./like.entity";
+import { PostLike } from "./postLike.entity";
+import { School } from "./school.entity";
 
 
 
 export enum Job {
-    etc = 0,
-    middleSchooler = 1,
-    highSchooler = 2,
-    teacher = 3,
-    parent = 4
+    etc = '기타',
+    middleSchooler = '중학교재학생',
+    highSchooler = '고등학교재학생',
+    teacher = '선생님',
+    parent = '학생부모님'
 }
 
 export enum Grade {
@@ -44,6 +47,9 @@ export class User {
     @Column({ type: "enum", enum: Job, default: Job.etc, nullable: false})
     job: Job;
 
+    @Column({ name: 'school_id' })
+    school_id: number;
+
     @Column({ type: "enum", enum: Grade, default: Grade.none, nullable: false })
     grade: Grade;
     
@@ -53,8 +59,12 @@ export class User {
     @OneToMany(() => Comment, (comment) => comment.user)
     comment: Comment[];
 
-    @OneToMany(() => Like, (like) => like.user)
-    like: Like[];
+    @OneToMany(() => PostLike, (postLike) => postLike.user)
+    postLike: PostLike[];
+
+    @ManyToOne(() => School, (school) => school.user)
+    @JoinColumn({ name: 'school_id' })
+    school: School;
 
     @CreateDateColumn()
     createdAt: Date;
