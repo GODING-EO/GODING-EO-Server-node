@@ -12,7 +12,7 @@ export class Topic {
     id: number;
 
     @Column({ unique: true, nullable: false })
-    topic_name: string;
+    name: string;
 
     @OneToMany(() => Post, (post) => post.topic)
     post: Post[];
