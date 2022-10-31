@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn 
 } from "typeorm";
 import { Post } from "./post.entity";
+import { TopicLike } from "./topicLike.entity";
 
 @Entity()
 export class Topic {
@@ -17,4 +18,6 @@ export class Topic {
     @OneToMany(() => Post, (post) => post.topic)
     post: Post[];
 
+    @OneToMany(() => TopicLike, (topicLike) => topicLike.topic)
+    topicLike: TopicLike[];
 }
