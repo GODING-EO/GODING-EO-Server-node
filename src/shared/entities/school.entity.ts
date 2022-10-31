@@ -5,6 +5,7 @@ import {
     PrimaryGeneratedColumn 
 } from "typeorm";
 import { Post } from "./post.entity";
+import { User } from "./user.entity";
 
 @Entity()
 export class School {
@@ -12,9 +13,11 @@ export class School {
     id: number;
 
     @Column()
-    schoolName: string;
+    name: string;
 
     @OneToMany(() => Post, (post) => post.school)
     post: Post[];
 
+    @OneToMany(() => User, (user) => user.school)
+    user: User[];
 }
