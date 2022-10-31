@@ -11,7 +11,8 @@ import {
 import { User } from "./user.entity";
 import { School } from "./school.entity";
 import { Topic } from "./topic.entity";
-import { Like } from "./like.entity";
+import { PostLike } from "./postLike.entity";
+import { Comment } from "./comment.entity";
 
 @Entity()
 export class Post {
@@ -54,9 +55,9 @@ export class Post {
     @JoinColumn({ name: 'topic_id' })
     topic: Topic;
 
-    @OneToMany(() => Like, (like) => like.post)
-    like: Like[];
+    @OneToMany(() => PostLike, (like) => like.post)
+    postlike: PostLike[];
 
-    @OneToMany(() => Like, (like) => like.post)
+    @OneToMany(() => Comment, (comment) => comment.post)
     comment: Comment[];
 }
