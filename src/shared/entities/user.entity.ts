@@ -12,6 +12,8 @@ import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
 import { PostLike } from "./postLike.entity";
 import { School } from "./school.entity";
+import { TopicLike } from "./topicLike.entity";
+import { SchoolLike } from "./schoolLike.entity";
 
 
 
@@ -61,6 +63,12 @@ export class User {
 
     @OneToMany(() => PostLike, (postLike) => postLike.user)
     postLike: PostLike[];
+
+    @OneToMany(() => TopicLike, (topicLike) => topicLike.topic)
+    topicLike: TopicLike[];
+
+    @OneToMany(() => SchoolLike, (schoolLike) => schoolLike.user)
+    schoolLike: SchoolLike[];
 
     @ManyToOne(() => School, (school) => school.user)
     @JoinColumn({ name: 'school_id' })
