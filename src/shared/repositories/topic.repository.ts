@@ -13,7 +13,7 @@ export class TopicRepository {
     async addTopic(topicWord: string) {
         const topic = new Topic();
 
-        topic.topic_name = topicWord;
+        topic.name = topicWord;
         const newTopic = await this.topicRepository.save(topic);
 
         return newTopic;
@@ -31,9 +31,9 @@ export class TopicRepository {
         // return await this.topicRepository.findOne({ where: { name: topicWord } });
 
         return await this.topicRepository.createQueryBuilder('topic')
-            .select('topic.topic_name')
+            .select('topic.name')
             .addSelect('topic.id')
-            .where('topic.topic_name = :topicWord', { topicWord })
+            .where('topic.name = :topicWord', { topicWord })
             .getOne();
     }
 
@@ -43,8 +43,8 @@ export class TopicRepository {
         // });
         
         return this.topicRepository.createQueryBuilder('topic')
-            .select('topic.topic_name')
-            .where('topic.topic_name like :topic_name', {
+            .select('topic.name')
+            .where('topic.name like :topic_name', {
                 topic_name : `%${searchWord}%`
             })
             .getMany();
