@@ -8,6 +8,7 @@ import { SchoolModule } from '../school/school.module';
 import { config } from '../config/ormconfig';
 import { TopicModule } from 'src/topic/topic.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { PostLikeModule } from 'src/post-like/post-like.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { AuthModule } from 'src/auth/auth.module';
     UserModule, 
     PostModule, 
     SchoolModule,
-    AuthModule
+    AuthModule,
+    PostLikeModule
   ],
   controllers: [AppController],
   providers: [AppService],
