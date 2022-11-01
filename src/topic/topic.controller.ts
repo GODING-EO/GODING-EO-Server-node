@@ -8,12 +8,12 @@ export class TopicController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post('/add')
-    public async addTopic(@Body('topic') topicWord: string) {
-        return await this.topicService.addTopic(topicWord);
+    public async addTopic(@Body('topic') topic_name: string) {
+        return await this.topicService.addTopic(topic_name);
     }
 
     @Get('search')
-    public async searchTopic(@Query('where') topicWord : string) {
-        return await this.topicService.searchTopic(topicWord);
+    public async searchTopic(@Query('where') search_word : string) {
+        return await this.topicService.searchTopic(search_word);
     }
 }

@@ -10,10 +10,10 @@ export class TopicRepository {
         private readonly topicRepository: Repository<Topic>
     ) {}
     
-    async addTopic(topicWord: string) {
+    async addTopic(topic_name: string) {
         const topic = new Topic();
 
-        topic.name = topicWord;
+        topic.name = topic_name;
         const newTopic = await this.topicRepository.save(topic);
 
         return newTopic;
@@ -22,22 +22,30 @@ export class TopicRepository {
         //     .insert()
         //     .into(Topic)
         //     .values([
-        //         { topic_name: topicWord }
+        //         { topic_name: topic_name }
         //     ])
         //     .execute(); 
     }
     
-    async getOneTopic(topicWord: string) {
+    async getOneTopicById(topic_id: number) {
         // return await this.topicRepository.findOne({ where: { name: topicWord } });
 
         return await this.topicRepository.createQueryBuilder('topic')
             .select('topic.name')
             .addSelect('topic.id')
-            .where('topic.name = :topicWord', { topicWord })
+            .where('topic.id = :topic_id', { topic_id })
             .getOne();
     }
 
-    async searchTopic(searchWord: string) {
+    async getOneTopicByWord(topic_name: string) {
+        return await this.topicRepository.createQueryBuilder('topic')
+            .select('topic.name')
+            .addSelect('topic.id')
+            .where('topic.name = :topic_name', { topic_name })
+            .getOne();
+    }
+
+    async searchTopic(search_word: string) {
         // return this.topicRepository.find({
         //     where: { topic_name: Like(`%${searchWord}%`) },
         // });
@@ -45,7 +53,7 @@ export class TopicRepository {
         return this.topicRepository.createQueryBuilder('topic')
             .select('topic.name')
             .where('topic.name like :topic_name', {
-                topic_name : `%${searchWord}%`
+                topic_name : `%${search_word}%`
             })
             .getMany();
     }
