@@ -20,13 +20,25 @@ export class PostLikeRepository {
         return await this.postLikeRepository.save(postlike);
     }
 
+    async canclePostLike(post_id: number, user: User) {
+        return this.postLikeRepository.createQueryBuilder('post_like')
+            .delete()
+            .from(PostLike)
+            .where('post_id = :post_id OR user_id = :user_id', {
+                post_id,
+                user_id: user.id
+            })
+            .execute()
+    }
+
     async checkLike(post_id: number, user: User) {
-         return await this.postLikeRepository.createQueryBuilder('post_like')
+         return this.postLikeRepository.createQueryBuilder('post_like')
             .select('post_like.post_id')
             .addSelect('post_like.user_id')
             .where('post_like.post_id = :post_id OR post_like.user_id = :user_id', {
                 post_id,
                 user_id: user.id 
             })
+            .getOne()
     }
 }
