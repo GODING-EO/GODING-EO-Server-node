@@ -41,4 +41,10 @@ export class PostLikeRepository {
             })
             .getOne()
     }
+
+    async countPostLike(post_id: number) {
+        return this.postLikeRepository.createQueryBuilder('post_like')
+            .where('post_like.post_id = :post_id', { post_id })
+            .getCount();
+    }
 }
