@@ -1,4 +1,4 @@
-import { Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { User } from 'src/shared/entities/user.entity';
@@ -32,5 +32,12 @@ export class PostLikeController {
             req.user as User
         );
         return { statusCode: 200, message: 'Cancle postlike success'}
+    }
+
+    @Get('/:post_id/like')
+    public async CountPostLike(
+        @Param('post_id') post_id: number
+    ) {
+        return this.postLikeService.CountPostLike(post_id);
     }
 }
