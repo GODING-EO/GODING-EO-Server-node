@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { User } from 'src/shared/entities/user.entity';
@@ -9,7 +9,7 @@ export class PostLikeController {
     constructor(private readonly postLikeService: PostLikeService) {}
 
     @UseGuards(AuthGuard('jwt'))
-    @Get('/:post_id/like')
+    @Post('/:post_id/like')
     public async addPostLike(
         @Param('post_id') post_id: number,
         @Req() req: Request
@@ -19,5 +19,18 @@ export class PostLikeController {
             req.user as User
         );
         return { statusCode: 200, message: 'postlike success'};
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete('/:post_id/like')
+    public async CanclePostLike(
+        @Param('post_id') post_id: number,
+        @Req() req: Request
+    ) {
+        await this.postLikeService.CanclePostLike(
+            post_id,
+            req.user as User
+        );
+        return { statusCode: 200, message: 'Cancle postlike success'}
     }
 }
