@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from 'src/shared/entities/post.entity';
 import { PostLike } from 'src/shared/entities/postLike.entity';
 import { PostRepository } from 'src/shared/repositories/post.repository';
-import { PostLikeRepository } from 'src/shared/repositories/postLike.repository';
+import { PostLikeRepository } from 'src/shared/repositories/post-like.repository';
 import { PostLikeController } from './post-like.controller';
 import { PostLikeService } from './post-like.service';
 
