@@ -28,4 +28,8 @@ export class PostLikeService {
                 else return await this.postLikeRepository.canclePostLike(post_id, user);
         } else throw new NotFoundError;
     }
+
+    public async CountPostLike(post_id: number) {
+        return await this.postLikeRepository.countPostLike(post_id);
+    }
 }
