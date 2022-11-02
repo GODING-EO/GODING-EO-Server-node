@@ -20,6 +20,17 @@ export class TopicLikeRepository {
         return await this.topicLikeRepository.save(topiclike);
     }
 
+    async cancelTopicLike(topic_id: number, user: User) {
+        return await this.topicLikeRepository.createQueryBuilder('topic_like')
+            .delete()
+            .from (TopicLike)
+            .where('topic_id = :topic_id OR user_id = :user_id', {
+                topic_id,
+                user_id: user.id
+            })
+            .execute()
+    }
+
     async checkLike(topic_id: number, user: User) {
         return this.topicLikeRepository.createQueryBuilder('topic_like')
             .select('topic_like.topic_id')
