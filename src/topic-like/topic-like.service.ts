@@ -19,4 +19,14 @@ export class TopicLikeService {
                 else throw new BadRequestError(`already done`);
         } else throw new NotFoundError;
     }
+
+    public async cancelTopicLike(topic_id: number, user: User) {
+        console.log(topic_id);
+        const topic = await this.topicRepository.getOneTopicById(topic_id)
+        if(topic) {
+            const like = await this.topicLikeRepository.checkLike(topic_id, user);
+            if(like) return await this.topicLikeRepository.cancelTopicLike(topic_id, user);
+                else throw new BadRequestError(`already done`);
+        } else throw new NotFoundError;
+    }
 }
