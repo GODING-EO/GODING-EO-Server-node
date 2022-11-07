@@ -23,7 +23,7 @@ export class CommentRepository{
         return newComment;
     }
 
-    async updateComment(content: string, user: User, comment_id: number) {
+    async updateComment(content: string, comment_id: number) {
         return this.commentRepository.createQueryBuilder('comment')
             .update(Comment)
             .set({
@@ -31,5 +31,23 @@ export class CommentRepository{
                 })
             .where('id = :comment_id', { comment_id })
             .execute();
+    }
+
+    async getOneComment(comment_id: number) {
+        return await this.commentRepository.createQueryBuilder('comment') 
+            .select('comment.id')
+            .addSelect('comment.content')
+            .addSelect('comment.user_id')
+            .addSelect('comment.post_id')
+            .addSelect('user.name')
+            .innerJoin('comment.user', 'user')
+            .where('comment.id = :comment_id', { comment_id })
+            .getOne();
+    }
+
+    async checkUserbyWrtier(comment_id: number, user: User): Promise<boolean> {
+        const writer = (await this.getOneComment(comment_id)).user_id;
+        if(writer == user.id) return true;
+        return false;
     }
 }
