@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { User } from 'src/shared/entities/user.entity';
@@ -39,6 +39,19 @@ export class CommentController {
             req.user as User,
             comment_id
         );
-        return { statusCode: 200, message: 'update success' }
+        return { statusCode: 200, message: 'update success' };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete('/:post_id/comment/:comment_id')
+    public async deleteComment(
+        @Param('comment_id') comment_id: number,
+        @Req() req: Request
+    ) {
+        await this.commentService.deleteComment(
+            req.user as User,
+            comment_id
+        );
+        return { statusCode: 200, message: 'delete success' };
     }
 }
