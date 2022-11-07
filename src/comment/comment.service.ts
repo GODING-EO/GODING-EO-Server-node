@@ -16,6 +16,10 @@ export class CommentService {
     public async getOneComment(comment_id: number) {
         return await this.commentRepository.getOneComment(comment_id);
     }
+
+    public async getPostComment(post_id: number) {
+        return await this.commentRepository.getPostComment(post_id);
+    }
     
     public async updateComment(content: string, user: User, comment_id: number) {
         if(!await this.commentRepository.getOneComment(comment_id)) {
