@@ -33,6 +33,14 @@ export class CommentRepository{
             .execute();
     }
 
+    async deleteComment(comment_id: number) {
+        return this.commentRepository.createQueryBuilder('comment')
+            .delete()
+            .from(Comment)
+            .where('id = :comment_id', { comment_id })
+            .execute()
+    }
+
     async getOneComment(comment_id: number) {
         return await this.commentRepository.createQueryBuilder('comment') 
             .select('comment.id')
