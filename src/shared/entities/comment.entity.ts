@@ -15,7 +15,7 @@ export class Comment {
     id: number;
 
     @Column({ length: 255, nullable: false })
-    comment: string;
+    content: string;
 
     @Column({ name: 'user_id' })
     user_id: number;
