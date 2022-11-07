@@ -1,4 +1,4 @@
 export type Payload = {
-    sub: number;
-    password: string;
+    sub: string;
+    userId: number;
 }
