@@ -13,10 +13,6 @@ export class CommentService {
         return await this.commentRepository.createComment(content, user, post_id);
     }
 
-    public async getOneComment(comment_id: number) {
-        return await this.commentRepository.getOneComment(comment_id);
-    }
-
     public async getPostComment(post_id: number) {
         return await this.commentRepository.getPostComment(post_id);
     }
