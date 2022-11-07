@@ -32,7 +32,7 @@ export class PostLikeRepository {
     }
 
     async checkLike(post_id: number, user: User) {
-         return this.postLikeRepository.createQueryBuilder('post_like')
+        return this.postLikeRepository.createQueryBuilder('post_like')
             .select('post_like.post_id')
             .addSelect('post_like.user_id')
             .where('post_like.post_id = :post_id OR post_like.user_id = :user_id', {
