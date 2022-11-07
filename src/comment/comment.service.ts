@@ -20,8 +20,16 @@ export class CommentService {
     public async updateComment(content: string, user: User, comment_id: number) {
         if(!await this.commentRepository.getOneComment(comment_id)) {
             throw new NotFoundError;
-        } else if( await this.commentRepository.checkUserbyWrtier(comment_id, user) == true) {
+        } else if(await this.commentRepository.checkUserbyWrtier(comment_id, user) == true) {
             return await this.commentRepository.updateComment(content, comment_id);
+        } throw new ForbiddenError;
+    }
+
+    public async deleteComment(user: User, comment_id: number) {
+        if(!await this.commentRepository.getOneComment(comment_id)) {
+            throw new NotFoundError;
+        } else if(await this.commentRepository.checkUserbyWrtier(comment_id, user) == true) {
+            return await this.commentRepository.deleteComment(comment_id);
         } throw new ForbiddenError;
     }
 }   
