@@ -41,6 +41,17 @@ export class CommentRepository{
             .execute()
     }
 
+    async getPostComment(post_id: number) {
+        return this.commentRepository.createQueryBuilder('comment')
+            .select('comment.id')
+            .addSelect('comment.content')
+            .addSelect('user.name')
+            .addSelect('comment.post_id')
+            .innerJoin('comment.user','user')
+            .where('comment.post_id = :post_id', { post_id })
+            .getMany();
+    }
+
     async getOneComment(comment_id: number) {
         return await this.commentRepository.createQueryBuilder('comment') 
             .select('comment.id')
