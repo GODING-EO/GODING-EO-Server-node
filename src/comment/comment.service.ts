@@ -13,8 +13,8 @@ export class CommentService {
         return await this.commentRepository.createComment(content, user, post_id);
     }
 
-    public async getPostComment(post_id: number) {
-        return await this.commentRepository.getPostComment(post_id);
+    public async getAllComment(post_id: number) {
+        return await this.commentRepository.getAllComment(post_id);
     }
     
     public async updateComment(content: string, user: User, comment_id: number) {
