@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { of } from 'rxjs';
 import { User } from 'src/shared/entities/user.entity';
 import { PostDto } from './dto/post.dto';
 import { PostService } from './post.service';
@@ -29,7 +30,7 @@ export class PostController {
 
     @UseGuards(AuthGuard('jwt'))
     @Get('/liketopic')
-    public async GetTopicLike(
+    public async getTopicLike(
         @Req() req: Request
     ) { return await this.postService.getPostOfTopic(req.user as User); }
 
@@ -45,7 +46,7 @@ export class PostController {
 
     @UseGuards(AuthGuard('jwt'))
     @Delete('/:post_id')
-    public async DeletePost(
+    public async deletePost(
         @Param('post_id') post_id: number,
         @Req() req:Request
     ) {
@@ -53,12 +54,12 @@ export class PostController {
             post_id,
             req.user as User,
         );
-        return { statusCode: 200, message: 'delete success'};
+        return { statusCode: 200, message: 'delete success' };
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Patch('/:post_id')
-    public async UpdatePost(
+    public async updatePost(
         @Param('post_id') post_id: number,
         @Body() postReqData: PostDto,
         @Req() req: Request
@@ -68,6 +69,15 @@ export class PostController {
             req.user as User,
             postReqData
         );
-        return { statusCode: 200, message: 'update success'};
+        return { statusCode: 200, message: 'update success' };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Post('/:post_id/report')
+    public async reportPost(
+        @Param('post_id') post_id: number
+    ) {
+        await this.postService.reportPost(post_id);
+        return { statusCode: 200, message: 'report success' };
     }
 }
