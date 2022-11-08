@@ -31,6 +31,14 @@ export class PostLikeRepository {
             .execute()
     }
 
+    async deleteAllLike(post_id: number) {
+        return this.postLikeRepository.createQueryBuilder('post_like')
+        .delete()
+        .from(PostLike)
+        .where('post_id = :post_id', { post_id })
+        .execute()
+    }
+
     async checkLike(post_id: number, user: User) {
         return this.postLikeRepository.createQueryBuilder('post_like')
             .select('post_like.post_id')
