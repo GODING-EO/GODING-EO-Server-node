@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/shared/entities/user.entity';
 import { ForbiddenError, NotFoundError } from 'src/shared/exception';
 import { PostRepository } from 'src/shared/repositories/post.repository';
+import { TopicLikeRepository } from 'src/shared/repositories/topic-like.repository';
 import { PostDto } from './dto/post.dto';
 
 @Injectable()
 export class PostService {
     constructor(
-        private readonly postRepository: PostRepository
+        private readonly postRepository: PostRepository,
+        private readonly topicLikeRepository: TopicLikeRepository
     ) {}
 
     public async createPost(postDto: PostDto, user: User) {
@@ -42,5 +44,13 @@ export class PostService {
 
     public async searchPost(searchWord: string) {
         return await this.postRepository.searchPost(searchWord);
+    }
+
+    public async getPostOfTopic(user: User) {
+        var postsArray = new Array();
+        const likeTopic = await this.topicLikeRepository.getLikeTopic(user);
+        for(var i = 0; i < likeTopic.length; i++) {
+            postsArray.push(await this.postRepository.GetTopicLike(likeTopic[i].topic_id));
+        }  return postsArray;
     }
 }
