@@ -35,10 +35,17 @@ export class TopicLikeRepository {
         return this.topicLikeRepository.createQueryBuilder('topic_like')
             .select('topic_like.topic_id')
             .addSelect('topic_like.user_id')
-            .where('topic_like.topic.id = :topic_id OR topic_like.user_id = :user_id', {
+            .where('topic_like.topic.id = :topic_id AND topic_like.user_id = :user_id', {
                 topic_id,
                 user_id: user.id
             })
             .getOne()
+    }
+
+    async getLikeTopic(user: User) {
+        return this.topicLikeRepository.createQueryBuilder('topic_like')
+            .select('topic_like.topic_id')
+            .where('topic_like.user_id = :user_id', { user_id : user.id })
+            .getMany()
     }
 }
