@@ -27,6 +27,12 @@ export class PostController {
         return await this.postService.searchPost(searchWord);
     }
 
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/liketopic')
+    public async GetTopicLike(
+        @Req() req: Request
+    ) { return await this.postService.getPostOfTopic(req.user as User); }
+
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
         return await this.postService.getOnePost(post_id);
