@@ -40,8 +40,16 @@ export class CommentRepository{
             .where('id = :comment_id', { comment_id })
             .execute()
     }
-
-    async getPostComment(post_id: number) {
+    
+    async deleteAllComment(post_id: number) {
+        return this.commentRepository.createQueryBuilder('comment')
+            .delete()
+            .from(Comment)
+            .where('post_id = :post_id', { post_id })
+            .execute();
+    }
+    
+    async getAllComment(post_id: number) {
         return this.commentRepository.createQueryBuilder('comment')
             .select('comment.id')
             .addSelect('comment.content')
