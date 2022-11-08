@@ -4,6 +4,7 @@ import { PostDto } from "src/post/dto/post.dto";
 import { Repository } from "typeorm";
 import { Post } from "../entities/post.entity";
 import { Topic } from "../entities/topic.entity";
+import { TopicLike } from "../entities/topicLike.entity";
 import { User } from "../entities/user.entity";
 
 @Injectable()
@@ -34,7 +35,6 @@ export class PostRepository {
             .select('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
-            .addSelect('post.user_id')
             .addSelect('user.name')
             .addSelect('school.name')
             .addSelect('topic.name')
@@ -93,7 +93,7 @@ export class PostRepository {
             .select('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
-            .addSelect('user.account_id')
+            .addSelect('user.name')
             .addSelect('school.name')
             .addSelect('topic.name')
             .addSelect('post.createdAt')
@@ -104,6 +104,21 @@ export class PostRepository {
                 title: `%${searchWord}%`,
                 content: `%${searchWord}%`
             })
+            .getMany();
+    }
+
+    async GetTopicLike(topic_id: number) {
+        return this.postRepository.createQueryBuilder('post')
+            .select('post.id')
+            .addSelect('post.title')
+            .addSelect('post.content')
+            .addSelect('post.image')
+            .addSelect('user.name')
+            .addSelect('topic.name')
+            .addSelect('post.createdAt')
+            .innerJoin('post.user', 'user')
+            .innerJoin('post.topic', 'topic')
+            .where('post.topic_id = :topic_id', { topic_id })
             .getMany();
     }
 }
