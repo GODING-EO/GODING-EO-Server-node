@@ -107,7 +107,7 @@ export class PostRepository {
             .getMany();
     }
 
-    async GetTopicLike(topic_id: number) {
+    async getTopicLike(topic_id: number) {
         return this.postRepository.createQueryBuilder('post')
             .select('post.id')
             .addSelect('post.title')
@@ -121,4 +121,21 @@ export class PostRepository {
             .where('post.topic_id = :topic_id', { topic_id })
             .getMany();
     }
+
+    async reportPost(post_id: number) {
+        return this.postRepository.createQueryBuilder('post')
+            .update(Post)
+            .set({ reports: () => 'reports + 1' })
+            .where('id = :post_id', { post_id })
+            .execute()
+    }
+
+    async reportCheck(post_id:number) {
+        return this.postRepository.createQueryBuilder('post')
+            .select('post.reports')
+            .where('id = :post_id', { post_id })
+            .getOne()
+    }
+
+
 }
