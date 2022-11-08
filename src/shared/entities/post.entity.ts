@@ -37,6 +37,9 @@ export class Post {
     @Column({ name: 'topic_id' })
     topic_id: number;
 
+    @Column({ default: 0 })
+    reports: number;
+
     @CreateDateColumn()
     createdAt: Date;
 
