@@ -16,8 +16,8 @@ export class PostService {
         private readonly postLikeRepository: PostLikeRepository
     ) {}
 
-    public async createPost(postDto: PostDto, user: User) {
-        return await this.postRepository.createPost(postDto, user);
+    public async createPost(postDto: PostDto, image: string, user: User) {
+        return await this.postRepository.createPost(postDto, image, user);
     }
 
     public async getOnePost(post_id: number) {
