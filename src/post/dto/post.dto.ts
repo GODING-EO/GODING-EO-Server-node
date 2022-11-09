@@ -7,12 +7,18 @@ export class PostDto {
     @IsString()
     content: string;
 
-    @IsString()
-    image: string;
-
     @IsNumber()
     school_id: number;
 
     @IsNumber()
     topic_id: number;
 }
+
+export class UpdatePostDto {
+    @IsString()
+    title: string;
+
+    @IsString()
+    content: string;
+}
+
