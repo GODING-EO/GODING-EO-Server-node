@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
-import { of } from 'rxjs';
 import { User } from 'src/shared/entities/user.entity';
 import { PostDto } from './dto/post.dto';
 import { PostService } from './post.service';
@@ -12,12 +12,15 @@ export class PostController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post()
+    @UseInterceptors(FileInterceptor('image'))
     public async createPost(
         @Body() postReqData: PostDto,
-        @Req() req: Request
+        @Req() req: Request,
+        @UploadedFile() image: Express.MulterS3.File
     ) {
         return await this.postService.createPost(
             postReqData,
+            (<any>image)?.location,
             req.user as User,
         );
     }
