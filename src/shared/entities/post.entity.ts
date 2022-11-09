@@ -31,10 +31,10 @@ export class Post {
     @Column({ name: 'user_id' })
     user_id: number;
 
-    @Column({ name: 'school_id' })
+    @Column({ name: 'school_id', default: 1 })
     school_id: number;
 
-    @Column({ name: 'topic_id' })
+    @Column({ name: 'topic_id', default: 1 })
     topic_id: number;
 
     @Column({ default: 0 })
