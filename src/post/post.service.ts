@@ -5,7 +5,7 @@ import { CommentRepository } from 'src/shared/repositories/comment.repository';
 import { PostLikeRepository } from 'src/shared/repositories/post-like.repository';
 import { PostRepository } from 'src/shared/repositories/post.repository';
 import { TopicLikeRepository } from 'src/shared/repositories/topic-like.repository';
-import { PostDto } from './dto/post.dto';
+import { PostDto, UpdatePostDto } from './dto/post.dto';
 
 @Injectable()
 export class PostService {
@@ -38,11 +38,11 @@ export class PostService {
         } throw  new ForbiddenError;
     }
 
-    public async updatePost(post_id: number, user: User, postDto: PostDto) {
+    public async updatePost(post_id: number, user: User, updatePostDto: UpdatePostDto) {
         if(!await this.postRepository.getOnePost(post_id)) {
             throw new NotFoundError;
         } else if(await this.postRepository.checkUserbyWriter(post_id, user) == true){
-            return await this.postRepository.updatePost(post_id, postDto);
+            return await this.postRepository.updatePost(post_id, updatePostDto);
         } throw new ForbiddenError;
     }
 
