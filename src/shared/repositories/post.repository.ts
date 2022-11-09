@@ -14,7 +14,7 @@ export class PostRepository {
         private readonly postRepository: Repository<Post>
     ) {}
 
-    async createPost(postDto: PostDto, user: User) {
+    async createPost(postDto: PostDto, image: string, user: User) {
         const post = new Post();
 
         console.log(postDto, user);
@@ -22,7 +22,7 @@ export class PostRepository {
         post.content = postDto.content;
         post.school_id = postDto.school_id;
         post.topic_id = postDto.topic_id;
-        post.image = postDto.image;
+        post.image = image;
         post.user_id = user.id;
         
         const newPost = await this.postRepository.save(post);
