@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { PostDto } from "src/post/dto/post.dto";
+import { PostDto, UpdatePostDto } from "src/post/dto/post.dto";
 import { Repository } from "typeorm";
 import { Post } from "../entities/post.entity";
 import { Topic } from "../entities/topic.entity";
@@ -75,14 +75,11 @@ export class PostRepository {
         return false;
     }
 
-    async updatePost(post_id: number, postDto: PostDto) {
+    async updatePost(post_id: number, updatePostDto: UpdatePostDto) {
         return this.postRepository.createQueryBuilder('post')
             .update(Post)
-            .set({  title: postDto.title,
-                    content: postDto.content,
-                    image: postDto.image,
-                    school_id: postDto.school_id,
-                    topic_id: postDto.topic_id
+            .set({  title: updatePostDto.title,
+                    content: updatePostDto.content,
                 })
             .where('id = :post_id', { post_id })
             .execute();
