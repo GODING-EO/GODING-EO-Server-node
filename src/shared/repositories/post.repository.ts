@@ -35,6 +35,7 @@ export class PostRepository {
             .select('post.title')
             .addSelect('post.content')
             .addSelect('post.image')
+            .addSelect('post.user_id')
             .addSelect('user.name')
             .addSelect('school.name')
             .addSelect('topic.name')
