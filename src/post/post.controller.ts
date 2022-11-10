@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { User } from 'src/shared/entities/user.entity';
 import { PostDto } from './dto/post.dto';
 import { PostService } from './post.service';
@@ -43,8 +43,11 @@ export class PostController {
     }
 
     @Get()
-    public async getAllPost() {
-        return await this.postService.getAllPost();
+    public async getAllPost(@Res() res: Response) {
+        const post =  await this.postService.getAllPost();
+        console.log(post);
+        if(post.length == 0) return res.status(204).send();
+        else return res.status(200).json(post);
     }
 
     @UseGuards(AuthGuard('jwt'))
