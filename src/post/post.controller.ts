@@ -27,9 +27,7 @@ export class PostController {
 
     @Get('search')
     public async searchPost(@Query('where') searchWord: string) {
-        const post = await this.postService.searchPost(searchWord);
-        if(post.length == 0) return { statusCode: 200, message: 'No data' };
-        return post;
+        return await this.postService.searchPost(searchWord);
     }
 
     @UseGuards(AuthGuard('jwt'))
@@ -38,7 +36,7 @@ export class PostController {
         @Req() req: Request
     ) {
         const post = await this.postService.getPostOfLikeTopic(req.user as User);
-        if(post == null) return { statusCode: 200, message: 'No LikeTopic' };
+        if(!post) return { statusCode: 200, message: 'No LikeTopic' };
         return post;
     }
 
@@ -49,9 +47,7 @@ export class PostController {
 
     @Get()
     public async getAllPost() {
-        const post =  await this.postService.getAllPost();
-        if(post.length == 0) return { statusCode: 200, message: 'No Data' };
-        return post;
+        return await this.postService.getAllPost();
     }
 
     @UseGuards(AuthGuard('jwt'))
