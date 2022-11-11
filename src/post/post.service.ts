@@ -50,12 +50,12 @@ export class PostService {
         return await this.postRepository.searchPost(searchWord);
     }
 
-    public async getPostOfTopic(user: User) {
+    public async getPostOfLikeTopic(user: User) {
         var postsArray = new Array();
         const likeTopic = await this.topicLikeRepository.getLikeTopic(user);
         for(var i = 0; i < likeTopic.length; i++) {
-            postsArray.push(await this.postRepository.getTopicLike(likeTopic[i].topic_id));
-        }  return postsArray;
+            postsArray.push(await this.postRepository.getPostOfLikeTopic(likeTopic[i].topic_id));
+        } return postsArray;
     }
 
     public async reportPost(post_id: number) {
