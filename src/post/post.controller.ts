@@ -36,7 +36,11 @@ export class PostController {
     @Get('/liketopic')
     public async getPostOfLikeTopic(
         @Req() req: Request
-    ) { return await this.postService.getPostOfLikeTopic(req.user as User); }
+    ) {
+        const post = await this.postService.getPostOfLikeTopic(req.user as User);
+        if(post == null) return { statusCode: 200, message: 'No LikeTopic' };
+        return post;
+    }
 
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
