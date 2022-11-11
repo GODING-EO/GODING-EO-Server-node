@@ -33,20 +33,20 @@ export class PostController {
 
     @UseGuards(AuthGuard('jwt'))
     @Get('/liketopic')
-    public async getTopicLike(
+    public async getPostOfLikeTopic(
         @Req() req: Request
-    ) { return await this.postService.getPostOfTopic(req.user as User); }
+    ) { return await this.postService.getPostOfLikeTopic(req.user as User); }
 
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
         return await this.postService.getOnePost(post_id);
-    }
+    } 
 
     @Get()
-    public async getAllPost(@Res() res: Response) {
+    public async getAllPost() {
         const post =  await this.postService.getAllPost();
-        console.log(post);
         if(post.length == 0) return { statusCode: 200, message: 'No Data' };
+        return post;
     }
 
     @UseGuards(AuthGuard('jwt'))
