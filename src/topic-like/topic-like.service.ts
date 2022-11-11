@@ -22,7 +22,7 @@ export class TopicLikeService {
 
     public async cancelTopicLike(topic_id: number, user: User) {
         console.log(topic_id);
-        const topic = await this.topicRepository.getOneTopicById(topic_id)
+        const topic = await this.topicRepository.getOneTopicById(topic_id);
         if(topic) {
             const like = await this.topicLikeRepository.checkLike(topic_id, user);
             if(like) return await this.topicLikeRepository.cancelTopicLike(topic_id, user);
