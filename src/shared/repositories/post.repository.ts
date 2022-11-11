@@ -105,7 +105,7 @@ export class PostRepository {
             .getMany();
     }
 
-    async getTopicLike(topic_id: number) {
+    async getPostOfLikeTopic(topic_id: number) {
         return this.postRepository.createQueryBuilder('post')
             .select('post.id')
             .addSelect('post.title')
