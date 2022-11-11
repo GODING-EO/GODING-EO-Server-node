@@ -53,6 +53,7 @@ export class PostService {
     public async getPostOfLikeTopic(user: User) {
         var postsArray = new Array();
         const likeTopic = await this.topicLikeRepository.getLikeTopic(user);
+        if(likeTopic.length == 0) return null;
         for(var i = 0; i < likeTopic.length; i++) {
             postsArray.push(await this.postRepository.getPostOfLikeTopic(likeTopic[i].topic_id));
         } return postsArray;
