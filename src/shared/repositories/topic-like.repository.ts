@@ -24,7 +24,7 @@ export class TopicLikeRepository {
         return await this.topicLikeRepository.createQueryBuilder('topic_like')
             .delete()
             .from (TopicLike)
-            .where('topic_id = :topic_id OR user_id = :user_id', {
+            .where('topic_id = :topic_id AND user_id = :user_id', {
                 topic_id,
                 user_id: user.id
             })
