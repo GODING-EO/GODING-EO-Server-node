@@ -27,8 +27,9 @@ export class PostController {
 
     @Get('search')
     public async searchPost(@Query('where') searchWord: string) {
-        console.timeLog(searchWord);
-        return await this.postService.searchPost(searchWord);
+        const post = await this.postService.searchPost(searchWord);
+        if(post.length == 0) return { statusCode: 200, message: 'No data' };
+        return post;
     }
 
     @UseGuards(AuthGuard('jwt'))
