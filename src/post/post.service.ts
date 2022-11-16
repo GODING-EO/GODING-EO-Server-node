@@ -4,6 +4,7 @@ import { ForbiddenError, NotFoundError } from 'src/shared/exception';
 import { CommentRepository } from 'src/shared/repositories/comment.repository';
 import { PostLikeRepository } from 'src/shared/repositories/post-like.repository';
 import { PostRepository } from 'src/shared/repositories/post.repository';
+import { SchoolLikeRepository } from 'src/shared/repositories/school-like.repository';
 import { TopicLikeRepository } from 'src/shared/repositories/topic-like.repository';
 import { PostDto, UpdatePostDto } from './dto/post.dto';
 
@@ -12,6 +13,7 @@ export class PostService {
     constructor(
         private readonly postRepository: PostRepository,
         private readonly topicLikeRepository: TopicLikeRepository,
+        private readonly schoolLikeRepository: SchoolLikeRepository,
         private readonly commentRepository: CommentRepository,
         private readonly postLikeRepository: PostLikeRepository
     ) {}
@@ -56,6 +58,16 @@ export class PostService {
         if(likeTopic.length == 0) return null;
         for(var i = 0; i < likeTopic.length; i++) {
             postsArray.push(await this.postRepository.getPostOfLikeTopic(likeTopic[i].topic_id));
+        } return postsArray;
+    }
+
+    public async getPostOfLikeSchool(user: User) {
+        var postsArray = new Array();
+        const likeSchool = await this.schoolLikeRepository.getLikeSchool(user);
+        console.log(likeSchool);
+        if(likeSchool.length == 0) return null;
+        for(var i = 0; i < likeSchool.length; i++) {
+            postsArray.push(await this.postRepository.getPostOfLikeSchool(likeSchool[i].school_id));
         } return postsArray;
     }
 
