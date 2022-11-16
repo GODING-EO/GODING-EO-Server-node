@@ -3,8 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { PostDto, UpdatePostDto } from "src/post/dto/post.dto";
 import { Repository } from "typeorm";
 import { Post } from "../entities/post.entity";
-import { Topic } from "../entities/topic.entity";
-import { TopicLike } from "../entities/topicLike.entity";
 import { User } from "../entities/user.entity";
 
 @Injectable()
@@ -16,8 +14,7 @@ export class PostRepository {
 
     async createPost(postDto: PostDto, image: string, user: User) {
         const post = new Post();
-
-        console.log(postDto, user);
+        
         post.title = postDto.title;
         post.content = postDto.content;
         post.school_id = postDto.school_id;
@@ -41,8 +38,8 @@ export class PostRepository {
             .addSelect('topic.name')
             .addSelect('post.createdAt')
             .innerJoin('post.user', 'user')
-            .innerJoin('post.topic', 'topic')
-            .innerJoin('post.school', 'school')
+            .leftJoin('post.topic', 'topic')
+            .leftJoin('post.school', 'school')
             .where('post.id = :post_id', { post_id })
             .getOne();
     }
@@ -57,8 +54,8 @@ export class PostRepository {
             .addSelect('topic.name')
             .addSelect('post.createdAt')
             .innerJoin('post.user', 'user')
-            .innerJoin('post.topic', 'topic')
-            .innerJoin('post.school', 'school')
+            .leftJoin('post.topic', 'topic')
+            .leftJoin('post.school', 'school')
             .getMany();
     }
 
@@ -96,8 +93,8 @@ export class PostRepository {
             .addSelect('topic.name')
             .addSelect('post.createdAt')
             .innerJoin('post.user', 'user')
-            .innerJoin('post.topic', 'topic')
-            .innerJoin('post.school', 'school')
+            .leftJoin('post.topic', 'topic')
+            .leftJoin('post.school', 'school')
             .where('post.title like :title OR post.content like :content', {
                 title: `%${searchWord}%`,
                 content: `%${searchWord}%`
@@ -115,8 +112,23 @@ export class PostRepository {
             .addSelect('topic.name')
             .addSelect('post.createdAt')
             .innerJoin('post.user', 'user')
-            .innerJoin('post.topic', 'topic')
+            .leftJoin('post.topic', 'topic')
             .where('post.topic_id = :topic_id', { topic_id })
+            .getMany();
+    }
+
+    async getPostOfLikeSchool(school_id: number) {
+        return this.postRepository.createQueryBuilder('post')
+            .select('post.id')
+            .addSelect('post.title')
+            .addSelect('post.content')
+            .addSelect('post.image')
+            .addSelect('user.name')
+            .addSelect('school.name')
+            .addSelect('post.createdAt')
+            .innerJoin('post.user', 'user')
+            .leftJoin('post.school', 'school')
+            .where('post.school_id = :school_id', { school_id })
             .getMany();
     }
 
