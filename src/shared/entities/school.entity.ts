@@ -16,11 +16,26 @@ export class School {
     @Column()
     name: string;
 
+    @Column()
+    type: string;
+
+    @Column()
+    location: string;
+    
+    @Column()
+    adress: string;
+
+    @Column()
+    phone: string;
+
+    @Column()
+    url: string;
+
+    @Column()
+    division: string;
+
     @OneToMany(() => Post, (post) => post.school)
     post: Post[];
-
-    @OneToMany(() => User, (user) => user.school)
-    user: User[];
 
     @OneToMany(() => SchoolLike, (schoolLike) => schoolLike.school)
     schoolLike: SchoolLike[];
