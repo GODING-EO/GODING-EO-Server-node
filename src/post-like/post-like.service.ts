@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/shared/entities/user.entity';
-import { BadRequestError, NotFoundError } from 'src/shared/exception';
+import { BadRequestError, ConflictError, NotFoundError } from 'src/shared/exception';
 import { PostRepository } from 'src/shared/repositories/post.repository';
 import { PostLikeRepository } from 'src/shared/repositories/post-like.repository';
 
@@ -13,10 +13,11 @@ export class PostLikeService {
 
     public async addPostLike(post_id: number, user: User) {
         const post = await this.postRepository.getOnePost(post_id);
+        console.log(post);
         if(post) {
             const like = await this.postLikeRepository.checkLike(post_id, user);
             if(!like) return await this.postLikeRepository.addPostLike(post_id, user);
-                else throw new BadRequestError(`already done`);
+                else throw new ConflictError(`already done`);
         } else throw new NotFoundError;
     }
 
