@@ -11,6 +11,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { PostLikeModule } from 'src/post-like/post-like.module';
 import { TopicLikeModule } from 'src/topic-like/topic-like.module';
 import { CommentModule } from 'src/comment/comment.module';
+import { SchoolLikeModule } from 'src/school-like/school-like.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { CommentModule } from 'src/comment/comment.module';
     AuthModule,
     PostLikeModule,
     TopicLikeModule,
-    CommentModule
+    CommentModule,
+    SchoolLikeModule
   ],
   controllers: [AppController],
   providers: [AppService],
