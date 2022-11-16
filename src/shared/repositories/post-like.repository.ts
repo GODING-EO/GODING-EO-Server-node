@@ -24,7 +24,7 @@ export class PostLikeRepository {
         return this.postLikeRepository.createQueryBuilder('post_like')
             .delete()
             .from(PostLike)
-            .where('post_id = :post_id OR user_id = :user_id', {
+            .where('post_id = :post_id AND user_id = :user_id', {
                 post_id,
                 user_id: user.id
             })
@@ -43,7 +43,7 @@ export class PostLikeRepository {
         return this.postLikeRepository.createQueryBuilder('post_like')
             .select('post_like.post_id')
             .addSelect('post_like.user_id')
-            .where('post_like.post_id = :post_id OR post_like.user_id = :user_id', {
+            .where('post_like.post_id = :post_id AND post_like.user_id = :user_id', {
                 post_id,
                 user_id: user.id 
             })
