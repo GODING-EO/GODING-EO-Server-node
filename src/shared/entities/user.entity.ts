@@ -11,7 +11,6 @@ import {
 import { Post } from "./post.entity";
 import { Comment } from "./comment.entity";
 import { PostLike } from "./postLike.entity";
-import { School } from "./school.entity";
 import { TopicLike } from "./topicLike.entity";
 import { SchoolLike } from "./schoolLike.entity";
 
@@ -23,13 +22,6 @@ export enum Job {
     highSchooler = '고등학교재학생',
     teacher = '선생님',
     parent = '학생부모님'
-}
-
-export enum Grade {
-    none = 0,
-    firstGrade = 1,
-    secondGrade = 2,
-    thirdGrade = 3
 }
 
 @Entity()
@@ -49,12 +41,6 @@ export class User {
     @Column({ type: "enum", enum: Job, default: Job.etc, nullable: false})
     job: Job;
 
-    @Column({ name: 'school_id' })
-    school_id: number;
-
-    @Column({ type: "enum", enum: Grade, default: Grade.none, nullable: false })
-    grade: Grade;
-    
     @OneToMany(() => Post, (post) => post.user)
     post: Post[];
 
@@ -69,10 +55,6 @@ export class User {
 
     @OneToMany(() => SchoolLike, (schoolLike) => schoolLike.user)
     schoolLike: SchoolLike[];
-
-    @ManyToOne(() => School, (school) => school.user)
-    @JoinColumn({ name: 'school_id' })
-    school: School;
 
     @CreateDateColumn()
     createdAt: Date;
