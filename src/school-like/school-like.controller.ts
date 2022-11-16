@@ -18,7 +18,7 @@ export class SchoolLikeController {
             school_id,
             req.user as User
         );
-        return { statusCode: 200, message: 'schoolLike success' };
+        return { statusCode: 201, message: 'schoolLike success' };
     }
 
     @UseGuards(AuthGuard('jwt'))
