@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/shared/entities/user.entity';
-import { BadRequestError, NotFoundError } from 'src/shared/exception';
+import { BadRequestError, ConflictError, NotFoundError } from 'src/shared/exception';
 import { TopicLikeRepository } from 'src/shared/repositories/topic-like.repository';
 import { TopicRepository } from 'src/shared/repositories/topic.repository';
 
@@ -16,7 +16,7 @@ export class TopicLikeService {
         if(topic) {
             const like = await this.topicLikeRepository.checkLike(topic_id, user);
             if(!like) return await this.topicLikeRepository.addTopicLike(topic_id,user);
-                else throw new BadRequestError(`already done`);
+                else throw new ConflictError(`already done`);
         } else throw new NotFoundError;
     }
 
