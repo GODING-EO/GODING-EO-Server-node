@@ -18,7 +18,7 @@ export class PostLikeController {
             post_id,
             req.user as User
         );
-        return { statusCode: 200, message: 'postlike success'};
+        return { statusCode: 201, message: 'postlike success'};
     }
 
     @UseGuards(AuthGuard('jwt'))
