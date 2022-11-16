@@ -42,7 +42,7 @@ export class SchoolLikeRepository {
             .getOne()
     }
 
-    async getLikeTopic(user: User) {
+    async getLikeSchool(user: User) {
         return this.schoolLikeRepository.createQueryBuilder('school_like')
             .select('school_like.school_id')
             .where('school_like.user_id = :user_id', { user_id : user.id })
