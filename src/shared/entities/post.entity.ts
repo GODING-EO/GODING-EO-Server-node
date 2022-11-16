@@ -31,10 +31,10 @@ export class Post {
     @Column({ name: 'user_id' })
     user_id: number;
 
-    @Column({ name: 'school_id', default: 1 })
+    @Column({ name: 'school_id', default: null })
     school_id: number;
 
-    @Column({ name: 'topic_id', default: 1 })
+    @Column({ name: 'topic_id', default: null })
     topic_id: number;
 
     @Column({ default: 0 })
@@ -50,11 +50,11 @@ export class Post {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @ManyToOne(() => School, (school) => school.post, { nullable: false })
+    @ManyToOne(() => School, (school) => school.post)
     @JoinColumn({ name: 'school_id' })
     school: School;
 
-    @ManyToOne(() => Topic, (topic) => topic.post, { nullable: false })
+    @ManyToOne(() => Topic, (topic) => topic.post)
     @JoinColumn({ name: 'topic_id' })
     topic: Topic;
 
