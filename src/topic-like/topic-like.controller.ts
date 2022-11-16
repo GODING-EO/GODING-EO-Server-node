@@ -18,7 +18,7 @@ export class TopicLikeController {
             topic_id,
             req.user as User
         );
-        return { statusCode: 200, message: 'topicLike success' };
+        return { statusCode: 201, message: 'topicLike success' };
     }
 
     @UseGuards(AuthGuard('jwt'))
