@@ -40,6 +40,17 @@ export class PostController {
         return post;
     }
 
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/likeschool')
+    public async getPostOfLikeSchool(
+        @Req() req: Request
+    ) {
+        const post = await this.postService.getPostOfLikeSchool(req.user as User);
+        if(!post) return { statusCode: 200, message: 'No LikeSchool' };
+        return post;
+    }
+
+
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
         return await this.postService.getOnePost(post_id);
