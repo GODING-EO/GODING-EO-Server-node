@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/shared/entities/user.entity';
-import { BadRequestError } from 'src/shared/exception';
+import { BadRequestError, ConflictError } from 'src/shared/exception';
 import { SchoolLikeRepository } from 'src/shared/repositories/school-like.repository';
 
 @Injectable()
@@ -10,10 +10,9 @@ export class SchoolLikeService {
     ) {}
 
     public async addSchoolLike(school_id: number, user: User) {
-        console.log(user);
         const like = await this.schoolLikeRepository.checkLike(school_id, user);
         if(!like) return await this.schoolLikeRepository.addSchoolLike(school_id, user);
-        throw new BadRequestError(`already done`);
+        throw new ConflictError(`already done`);
     }
 
     public async cancelSchoolLike(school_id: number, user: User) {
