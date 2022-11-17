@@ -31,6 +31,8 @@ export class PostLikeService {
     }
 
     public async CountPostLike(post_id: number) {
-        return await this.postLikeRepository.countPostLike(post_id);
+        const post = await this.postRepository.getOnePost(post_id);
+        if(post) return await this.postLikeRepository.countPostLike(post_id);
+        throw new NotFoundError;
     }
 }
