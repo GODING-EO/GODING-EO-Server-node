@@ -1,5 +1,5 @@
 {
-  "name": "nest-app",
+  "name": "godingeo",
   "version": "0.0.1",
   "description": "",
   "author": "yebin <yebin5127@gmail.com>",
@@ -40,6 +40,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "nest-morgan": "^2.0.0",
+    "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pg": "^8.8.0",
