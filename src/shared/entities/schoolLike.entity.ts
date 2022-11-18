@@ -1,6 +1,5 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { School } from "./school.entity";
-import { Topic } from "./topic.entity";
 import { User } from "./user.entity";
 
 @Entity()

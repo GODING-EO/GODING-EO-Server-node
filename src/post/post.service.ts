@@ -37,7 +37,7 @@ export class PostService {
             throw  new NotFoundError;
         } else if(await this.postRepository.checkUserbyWriter(post_id, user) == true){
             return await this.postRepository.deletePost(post_id);
-        } throw  new ForbiddenError;
+        } throw new ForbiddenError;
     }
 
     public async updatePost(post_id: number, user: User, updatePostDto: UpdatePostDto) {
