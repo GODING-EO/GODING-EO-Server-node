@@ -72,12 +72,14 @@ export class PostService {
     }
 
     public async reportPost(post_id: number) {
-        this.postRepository.reportPost(post_id);
-        console.log((await this.postRepository.reportCheck(post_id)).reports);
-        if(((await this.postRepository.reportCheck(post_id)).reports) >= 3) {
-            this.postLikeRepository.deleteAllLike(post_id);
-            this.commentRepository.deleteAllComment(post_id);
-            return this.postRepository.deletePost(post_id);
-        } return;
+        if(await this.postRepository.getOnePost(post_id))
+        {
+            await this.postRepository.reportPost(post_id);
+            if(((await this.postRepository.reportCheck(post_id)).reports) >= 3) {
+                this.postLikeRepository.deleteAllLike(post_id);
+                this.commentRepository.deleteAllComment(post_id);
+                return this.postRepository.deletePost(post_id);
+            } return;
+        } else throw new NotFoundError;
     }
 }
