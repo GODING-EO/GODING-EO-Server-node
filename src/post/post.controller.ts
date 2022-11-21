@@ -95,6 +95,6 @@ export class PostController {
         @Param('post_id') post_id: number
     ) {
         await this.postService.reportPost(post_id);
-        return { statusCode: 200, message: 'report success' };
+        return { statusCode: 201, message: 'report success' };
     }
 }
