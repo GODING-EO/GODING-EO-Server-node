@@ -53,12 +53,12 @@ export class PostController {
 
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
-        return await this.postService.getOnePost(post_id);
+        return { Post: await this.postService.getOnePost(post_id) };
     } 
 
     @Get()
     public async getAllPost() {
-        return await this.postService.getAllPost();
+        return { Posts: await this.postService.getAllPost() };
     }
 
     @UseGuards(AuthGuard('jwt'))
