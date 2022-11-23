@@ -13,26 +13,29 @@ export class School {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ nullable: false })
     name: string;
 
-    @Column()
+    @Column({ nullable: false })
     type: string;
 
-    @Column()
+    @Column({ nullable: false })
     location: string;
     
-    @Column()
+    @Column({ nullable: false })
     adress: string;
 
-    @Column()
+    @Column({ nullable: false })
     phone: string;
 
-    @Column()
+    @Column({ nullable: false })
     url: string;
 
-    @Column()
+    @Column({ nullable: false })
     division: string;
+
+    @Column({ nullable: true })
+    image_url: string;
 
     @OneToMany(() => Post, (post) => post.school)
     post: Post[];
