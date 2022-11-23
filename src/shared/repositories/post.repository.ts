@@ -30,6 +30,7 @@ export class PostRepository {
     async getOnePost(post_id: number) {
         return await this.postRepository.createQueryBuilder('post')
             .select('post.title')
+            .addSelect('post.id')
             .addSelect('post.content')
             .addSelect('post.image')
             .addSelect('post.user_id')
@@ -47,6 +48,7 @@ export class PostRepository {
     async getAllPost() {
         return this.postRepository.createQueryBuilder('post')
             .select('post.title')
+            .addSelect('post.id')
             .addSelect('post.content')
             .addSelect('post.image')
             .addSelect('user.name')
@@ -86,6 +88,7 @@ export class PostRepository {
     async searchPost(searchWord: string) {
         return this.postRepository.createQueryBuilder('post')
             .select('post.title')
+            .addSelect('post.id')
             .addSelect('post.content')
             .addSelect('post.image')
             .addSelect('user.name')
