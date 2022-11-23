@@ -25,7 +25,9 @@ export class CommentController {
     @Get('/:post_id/comment')
     public async getAllComment(
         @Param('post_id') post_id: number
-    ) { return await this.commentService.getAllComment(post_id); }
+    ) { 
+        return { Comments: await this.commentService.getAllComment(post_id) };
+    }
 
     @UseGuards(AuthGuard('jwt'))
     @Patch('/:post_id/comment/:comment_id')
