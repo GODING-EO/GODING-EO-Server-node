@@ -14,24 +14,11 @@ export class SchoolLikeController {
         @Param('school_id') school_id: number,
         @Req() req: Request
     ) {
-        await this.schoolLikeService.addSchoolLike(
+        const boolean = await this.schoolLikeService.SchoolLike(
             school_id,
             req.user as User
         );
-        return { statusCode: 201, message: 'schoolLike success' };
+        if(boolean == true) return { statusCode: 201, message: 'schoolLike success' };
+        else if(boolean == false) return { statusCode: 200, message: 'Cancel schoolLike success' };
     }
-
-    @UseGuards(AuthGuard('jwt'))
-    @Delete('/:school_id/like')
-    public async cancelSchoolLike(
-        @Param('school_id') school_id: number,
-        @Req() req: Request
-    ) {
-        await this.schoolLikeService.cancelSchoolLike(
-            school_id,
-            req.user as User
-        );
-        return { statusCode: 200, message: 'Cancel schoolLike success' };
-    }
-
 }
