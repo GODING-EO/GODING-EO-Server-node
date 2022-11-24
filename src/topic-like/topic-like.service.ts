@@ -11,22 +11,18 @@ export class TopicLikeService {
         private readonly topicRepository: TopicRepository
     ) {}
 
-    public async addTopicLike(topic_id: number, user: User) {
+    public async TopicLike(topic_id: number, user: User): Promise<boolean> {
         const topic = await this.topicRepository.getOneTopicById(topic_id);
         if(topic) {
             const like = await this.topicLikeRepository.checkLike(topic_id, user);
-            if(!like) return await this.topicLikeRepository.addTopicLike(topic_id,user);
-                else throw new ConflictError(`already done`);
-        } else throw new NotFoundError;
-    }
-
-    public async cancelTopicLike(topic_id: number, user: User) {
-        console.log(topic_id);
-        const topic = await this.topicRepository.getOneTopicById(topic_id);
-        if(topic) {
-            const like = await this.topicLikeRepository.checkLike(topic_id, user);
-            if(like) return await this.topicLikeRepository.cancelTopicLike(topic_id, user);
-                else throw new BadRequestError(`already done`);
+            if(!like) {
+                await this.topicLikeRepository.addTopicLike(topic_id,user);
+                return true;
+            }
+            else if(like) {
+                await this.topicLikeRepository.cancelTopicLike(topic_id, user);
+                return false;
+            }
         } else throw new NotFoundError;
     }
 }
