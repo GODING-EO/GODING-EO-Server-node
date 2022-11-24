@@ -9,15 +9,15 @@ export class SchoolLikeService {
         private readonly schoolLikeRepository: SchoolLikeRepository,
     ) {}
 
-    public async addSchoolLike(school_id: number, user: User) {
+    public async SchoolLike(school_id: number, user: User): Promise<boolean>{
         const like = await this.schoolLikeRepository.checkLike(school_id, user);
-        if(!like) return await this.schoolLikeRepository.addSchoolLike(school_id, user);
-        throw new ConflictError(`already done`);
-    }
-
-    public async cancelSchoolLike(school_id: number, user: User) {
-        const like = await this.schoolLikeRepository.checkLike(school_id, user);
-        if(like) return await this.schoolLikeRepository.cancelSchoolLike(school_id, user);
-        throw new BadRequestError(`already done`);
+        if(!like) {
+            await this.schoolLikeRepository.addSchoolLike(school_id, user);
+            return true;
+        }
+        else if(like) {
+            await this.schoolLikeRepository.cancelSchoolLike(school_id, user);
+            return false;
+        }
     }
 }
