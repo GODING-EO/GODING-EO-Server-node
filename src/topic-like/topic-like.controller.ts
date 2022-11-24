@@ -14,23 +14,11 @@ export class TopicLikeController {
         @Param('topic_id')  topic_id: number,
         @Req() req: Request
     ) {
-        await this.topicLikeService.addTopicLike(
+        const boolean = await this.topicLikeService.TopicLike(
             topic_id,
             req.user as User
         );
-        return { statusCode: 201, message: 'topicLike success' };
-    }
-
-    @UseGuards(AuthGuard('jwt'))
-    @Delete('/:topic_id/like')
-    public async cancelTopicLike(
-        @Param('topic_id') topic_id: number,
-        @Req() req: Request
-    ) {
-        await this.topicLikeService.cancelTopicLike(
-            topic_id,
-            req.user as User
-        );
-        return { statusCode: 200, message: 'Cancel topicLike success' };
+        if(boolean == true) return { statusCode: 201, message: 'topicLike success' };
+        else if(boolean == false) return { statusCode: 200, message: 'Cancel topiclike success' };
     }
 }
