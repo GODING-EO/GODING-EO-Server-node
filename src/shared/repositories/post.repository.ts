@@ -65,6 +65,26 @@ export class PostRepository {
             .getMany();
     }
 
+    async getMyPost(user: User) {
+        return await this.postRepository.createQueryBuilder('post')
+            .select('post.title')
+            .addSelect('post.id')
+            .addSelect('post.content')
+            .addSelect('post.image')
+            .addSelect('post.user_id')
+            .addSelect('user.name')
+            .addSelect('school.name')
+            .addSelect('topic.name')
+            .loadRelationCountAndMap('post.likeCount', 'post.postlike')
+            .addSelect('post.createdAt')
+            .addSelect('post.updatedAt')
+            .innerJoin('post.user', 'user')
+            .leftJoin('post.topic', 'topic')
+            .leftJoin('post.school', 'school')
+            .where('post.user_id = :user_id', { user_id: user.id })
+            .getOne();
+    }
+
     async deletePost(post_id: number) {
         return this.postRepository.createQueryBuilder('post')
             .delete()
