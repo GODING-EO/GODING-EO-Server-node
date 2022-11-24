@@ -14,24 +14,12 @@ export class PostLikeController {
         @Param('post_id') post_id: number,
         @Req() req: Request
     ) {
-        await this.postLikeService.addPostLike(
+        const boolean = await this.postLikeService.PostLike(
             post_id,
             req.user as User
         );
-        return { statusCode: 201, message: 'postlike success'};
-    }
-
-    @UseGuards(AuthGuard('jwt'))
-    @Delete('/:post_id/like')
-    public async CanclePostLike(
-        @Param('post_id') post_id: number,
-        @Req() req: Request
-    ) {
-        await this.postLikeService.CanclePostLike(
-            post_id,
-            req.user as User
-        );
-        return { statusCode: 200, message: 'Cancle postlike success'}
+        if(boolean == true) return { statusCode: 201, message: 'postlike success' };
+        else if(boolean == false) return { statusCode: 200, message: 'Cancel postlike success' };
     }
 
     @Get('/:post_id/like')
