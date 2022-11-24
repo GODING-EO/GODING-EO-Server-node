@@ -31,6 +31,10 @@ export class PostService {
     public async getAllPost() {
        return await this.postRepository.getAllPost();
     }
+    
+    public async getMyPost(user: User) {
+        return await this.postRepository.getMyPost(user);
+    }
 
     public async deletePost(post_id: number, user: User) {
         if(!await this.postRepository.getOnePost(post_id)) {
