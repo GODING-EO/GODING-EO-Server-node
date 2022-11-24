@@ -11,13 +11,18 @@ export class PostLikeService {
         private readonly postRepository: PostRepository
     ) {}
 
-    public async addPostLike(post_id: number, user: User) {
+    public async PostLike(post_id: number, user: User): Promise<boolean> {
         const post = await this.postRepository.getOnePost(post_id);
-        console.log(post);
         if(post) {
             const like = await this.postLikeRepository.checkLike(post_id, user);
-            if(!like) return await this.postLikeRepository.addPostLike(post_id, user);
-                else throw new ConflictError(`already done`);
+            if(!like) {
+                await this.postLikeRepository.addPostLike(post_id, user); 
+                return true;
+            }
+            else if(like) {
+                await this.postLikeRepository.canclePostLike(post_id, user);
+                return false; 
+            }
         } else throw new NotFoundError;
     }
 
