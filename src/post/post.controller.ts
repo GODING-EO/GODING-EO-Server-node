@@ -27,7 +27,7 @@ export class PostController {
 
     @Get('search')
     public async searchPost(@Query('where') searchWord: string) {
-        return await this.postService.searchPost(searchWord);
+        return { Post: await this.postService.searchPost(searchWord) };
     }
 
     @UseGuards(AuthGuard('jwt'))
