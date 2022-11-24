@@ -37,7 +37,7 @@ export class PostController {
     ) {
         const post = await this.postService.getPostOfLikeTopic(req.user as User);
         if(!post) return { statusCode: 200, message: 'No LikeTopic' };
-        return post;
+        return { likeTopicPost: post };
     }
 
     @UseGuards(AuthGuard('jwt'))
@@ -47,7 +47,7 @@ export class PostController {
     ) {
         const post = await this.postService.getPostOfLikeSchool(req.user as User);
         if(!post) return { statusCode: 200, message: 'No LikeSchool' };
-        return post;
+        return { likeSchoolPost: post };
     }
 
 
@@ -58,7 +58,7 @@ export class PostController {
 
     @Get()
     public async getAllPost() {
-        return { Posts: await this.postService.getAllPost() };
+        return { Post: await this.postService.getAllPost() };
     }
 
     @UseGuards(AuthGuard('jwt'))
