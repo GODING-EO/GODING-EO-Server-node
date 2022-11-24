@@ -49,7 +49,12 @@ export class PostController {
         if(!post) return { statusCode: 200, message: 'No LikeSchool' };
         return { likeSchoolPost: post };
     }
-
+    
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/mypost')
+    public async getMyPost(@Req() req: Request) {
+        return { Post: await this.postService.getMyPost(req.user as User) };
+    }
 
     @Get('/:post_id')
     public async getOnePost(@Param('post_id') post_id: number) {
@@ -60,6 +65,7 @@ export class PostController {
     public async getAllPost() {
         return { Post: await this.postService.getAllPost() };
     }
+
 
     @UseGuards(AuthGuard('jwt'))
     @Delete('/:post_id')
